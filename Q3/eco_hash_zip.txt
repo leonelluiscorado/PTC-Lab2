@@ -34,3 +34,36 @@ PS C:\Users\JoséEduardo\Documents\GitHub\PTC-Lab2> openssl enc -d -aes-256-cbc 
 enter AES-256-CBC decryption password:
 type .\Q3\eco_decripted.py
 print("OlÃ¡ Mundo / Hello world")
+
+d) modos de operação
+Separou-se o bmp em head e body:
+
+head -c 54 ./Q3/c-academy.bmp > ./Q3/eco_c-academy_header
+tail -c +55 ./Q3/c-academy.bmp > ./Q3/eco_c-academy_body
+
+openssl enc -aes-256-cbc -pbkdf2 -in ./Q3/eco_c-academy_body -out ./Q3/eco_cbc_c-adademy_body.enc
+openssl enc -aes-256-ecb -pbkdf2 -in ./Q3/eco_c-academy_body -out ./Q3/eco_ecb_c-adademy_body.enc
+
+cat ./Q3/eco_c-academy_header ./Q3/eco_cbc_c-adademy_body.enc > ./Q3/eco_cbc_c-academy.bmp
+cat ./Q3/eco_c-academy_header ./Q3/eco_ecb_c-adademy_body.enc > ./Q3/eco_ecb_c-academy.bmp
+
+O ecb tem um pouco mais de visibilidade, permitindo ver ainda o logo-tipo da c-academy
+No cbc só há "chuva".
+
+e) criptografia assimétrica
+ openssl genrsa -out ./Q3/eco_pribvate-key.pem 2048
+
+openssl dgst -sha256 -sign ./Q3/eco_pribvate-key.pem -out ./Q3/eco_sign.bin Lab2-enunciado.pdf
+
+openssl dgst -sha256 -verify ./Q3/eco_public-key.pem -signature ./Q3/eco_sign.bin Lab2-enunciado.pdf 
+Verified OK
+
+openssl dgst -sha256 -verify ./Q3/eco_public-key.pem -signature ./Q3/eco_sign.bin eco-Lab2-enunciado-changed.pdf 
+Verification failure
+4047971B9B7F0000:error:02000068:rsa routines:ossl_rsa_verify:bad signature:../crypto/rsa/rsa_sign.c:430:
+4047971B9B7F0000:error:1C880004:Provider routines:rsa_verify:RSA lib:../providers/implementations/signature/rsa_sig.c:774:
+
+...after changing back to original byte
+openssl dgst -sha256 -verify ./Q3/eco_public-key.pem -signature ./Q3/eco_sign.bin eco-Lab2-enunciado-changed.pdf 
+Verified OK
+
