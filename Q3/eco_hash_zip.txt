@@ -1,0 +1,36 @@
+a)
+-------- hash original
+2ec1c7510893c6274722f587e6e5a2d3ec3ad4f077727be22fd85b13a18304feab5a93a5c57c82ffe9c8f2f8763b64452256e4053b5e186c68e620bf698ae857
+------------------------------------------------------------ com byte alterado ------------------
+8feb0643e31ccba694e19ce5a817a6e8cf1bde905d5edb335a5f251541683111d5f597da0545a902b72a5696d84c8b7b46448e728c22cbc49573d7b7b21728df
+820c8c77b8f114ce56531a31746f0178684843e08b43640a6b7c4320988b27dabc5d720d1895330ea1fdf0b79ed397605fab7b746d3b01439e77a7522ca3371a
+97c4e4bba4a49c0dc7d7230965c5f7e8ea7fc30b91b74f4c4e492418ec512667eedc593862e54a17fed9f3456ec4d0f3aa129654fa7933d6086a9bf7a2c2ef0c
+------------------------------ com byte reposto ------------------------
+2ec1c7510893c6274722f587e6e5a2d3ec3ad4f077727be22fd85b13a18304feab5a93a5c57c82ffe9c8f2f8763b64452256e4053b5e186c68e620bf698ae857
+2ec1c7510893c6274722f587e6e5a2d3ec3ad4f077727be22fd85b13a18304feab5a93a5c57c82ffe9c8f2f8763b64452256e4053b5e186c68e620bf698ae857
+2ec1c7510893c6274722f587e6e5a2d3ec3ad4f077727be22fd85b13a18304feab5a93a5c57c82ffe9c8f2f8763b64452256e4053b5e186c68e620bf698ae857
+
+b) MAC
+>openssl dgst -sha512 -hmac "bizme256%" .\Q2\zecoelho.py
+HMAC-SHA2-512(.\Q2\zecoelho.py)= d255fb0e6f0f010b0cfedeef90d9a30c29fabaca412eb4e1fdc24f547b433e715890633ac292bffd4168c1b1acff8a8f9158fccc1718f47f5ee1cbbc99a42e83
+
+> openssl dgst -sha512 -hmac "bizme256%" .\Lab2-enunciado.pdf   
+HMAC-SHA2-512(.\Lab2-enunciado.pdf)= dc50e5132e5b9b86f751086a130a860973025b7761846591aaaf2f08375bfd292b9ac90307e72b85221e1cf546ca938b20206f40c6cc0a3c8932596d69aa2652
+
+c) Cifra e decifra
+
+Cifra:
+> openssl enc -aes-256-cbc -pbkdf2 -in .\Q2\zecoelho.py -out .\Q3\eco_encripted.enc
+
+enter AES-256-CBC encryption password:
+
+Verifying - enter AES-256-CBC encryption password:
+> type .\Q3\eco_encripted.enc
+Salted__xZ»lûôÊ$ûÊ‹íP␦©ÿËg/y÷„;‘sƒ
+Ôa›øè¯ÏcÊ±Vƒ\ÞôÌÆ™áÛ”
+
+Decifra:
+PS C:\Users\JoséEduardo\Documents\GitHub\PTC-Lab2> openssl enc -d -aes-256-cbc -pbkdf2 -in .\Q3\eco_encripted.enc -out .\Q3\eco_decripted.py
+enter AES-256-CBC decryption password:
+type .\Q3\eco_decripted.py
+print("OlÃ¡ Mundo / Hello world")
